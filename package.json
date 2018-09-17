@@ -1,0 +1,25 @@
+{
+  "name": "rabify-docs",
+  "version": "0.0.1",
+  "description": "一般社団法人リレーションデザイン研究所の提供するWebサイト/アプリ最適化サービス「rabify」シリーズのドキュメントです。",
+  "main": "index.js",
+  "dependencies": {
+    "gitbook-cli": "^2.3.2"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "serve": "gitbook serve",
+    "build": "gitbook build",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rdlabo/rabify-docs.git"
+  },
+  "author": "Masahiko Sakakibara <sakakibara@rdlabo.jp> (https://www.rdlabo.jp/)",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/rdlabo/rabify-docs/issues"
+  },
+  "homepage": "https://github.com/rdlabo/rabify-docs#readme"
+}
