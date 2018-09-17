@@ -9,7 +9,7 @@
   "devDependencies": {},
   "scripts": {
     "serve": "gitbook serve",
-    "build": "gitbook build",
+    "build": "gitbook build && cp _redirects _book/_redirects",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
