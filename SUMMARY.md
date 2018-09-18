@@ -2,15 +2,10 @@
 
 * [Introdution](README.md)
 * [rabify CDN とは](docs/rabify_cdn.md)
-  * 利用事例
-    * 女友だちをつくる女性専用ソーシャルサービス tipsys
-    * 俺の嫁が可愛い / うちの旦那が素敵
-  * 対応サーバ
-  * お申込み方法
+  * [利用事例](docs/rabify_cdn/usage.md)
+  * [対応サーバ](docs/rabify_cdn/server.md)
+  * [お申込み方法](docs/rabify_cdn/application.md)
   * 設定方法
-    * Basic
-    * WordPress
-    * プログラミング言語別
-      * JavaScript
-      * PHP
-      * Ruby
+    * [Basic](docs/rabify_cdn/setting/basic.md)
+    * [WordPress](docs/rabify_cdn/setting/wordpress.md)
+    * [プログラミング言語別](docs/rabify_cdn/setting/language.md)
