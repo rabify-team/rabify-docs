@@ -31,7 +31,20 @@ URLの最後に`?d=`の引数をつけてサイズを指定することで、画
 ```
 
 ## WordPress
-WordPressは、Themeの`functions.php`によって`<img>`タグの上書きを行うことができます。
+WordPressは、Themeの`functions.php`によって`<img src>`タグの上書きを行うことができます。以下のソースコードを`functions.php`の最後の行にコピペください。
+
+```PHP
+function rabify_cdn_replace_filter( $the_content ) {
+	$cdn_url = 'https://rabify.example.com'; // rabify CDNで発行されたURLに差し替えください
+	$site_url = preg_replace('/(http:\/\/|https:\/\/)/', '', site_url());
+	$site_url = preg_replace('/\./', '\.', $site_url);
+	$pattern = "/(http:\/\/|https:\/\/)${site_url}(.*)(\.jpg|\.jpeg|\.png|\.bmp)/";
+
+	$the_content = preg_replace($pattern, $cdn_url."$2$3", $the_content);
+  return $the_content;
+}
+add_filter('the_content', 'rabify_cdn_replace_filter');
+```
 
 ## 言語別関数
 ### PHP
