@@ -4,27 +4,27 @@
 ## 基本的な方法
 お客様のHTML、CSSで指定している画像URLのドメインを、`rabify CDN`に差し替えます。
 
-```
+```HTML
 <img src="https://example.com/img/hero.jpg" />
 ```
 
 があったとしたら、以下に差し替えてください。
 
-```
+```HTML
 <img src="https://rabify.example.com/img/hero.jpg" />
 ```
 
 ### 画像を縮小する場合
 URLの最後に`?d=`の引数をつけてサイズを指定することで、画像を縮小することができます。例えば、以下のURLの場合、横幅200pxに縮小されます。
 
-```
+```HTML
 <img src="https://rabify.example.com/img/hero.jpg?d=200" />
 ```
 
 ブラウザのスクリーン幅によって異なる画像を読み込む`srcset`属性をつかって、複数のサイズの画像を利用する時は以下のようになります。320pxと620pxの場合の縮小画像を用意しています。
 
 
-```
+```HTML
 <img src="https://rabify.example.com/img/hero.jpg"
   srcset="https://rabify.example.com/img/hero.jpg?d=320 320w
            https://rabify.example.com/img/hero.jpg?d=620 620w" />
