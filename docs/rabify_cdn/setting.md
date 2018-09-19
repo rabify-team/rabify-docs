@@ -73,7 +73,7 @@ function rabify_cdn_add_srcset( $the_content )
   }
   $srcset = rtrim($srcset, ',') . "\" " . SRC_SIZE;
 
-	$replace_content = preg_replace($pattern, CDN_URL."$1\"$2\" ${srcset} $3", $the_content);
+	$replace_content = preg_replace($pattern, "$1\"$2\" ${srcset} $3", $the_content);
 	return $replace_content;
 }
 
