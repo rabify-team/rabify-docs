@@ -88,8 +88,7 @@ add_filter( 'the_content', 'rabify_cdn_replace_filter', 1 );
 // srcsetの設定されていないimgタグにすべてsrcsetを追加します
 add_filter( 'the_content', 'rabify_cdn_add_srcset', 2 );
 
-// デフォルトのsrcsetを有効化する場合、コメントアウトしてください。
-// WordPressのメディアで設定された画像サイズにしたがって、srcsetが設定されます。
+// WordPressデフォルトのsrcsetを有効化する場合、コメントアウトしてください。
 add_filter( 'wp_calculate_image_srcset_meta', '__return_null' );
 
 /**
