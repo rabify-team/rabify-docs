@@ -95,8 +95,3 @@ add_filter( 'wp_calculate_image_srcset_meta', '__return_null' );
  * ----------------------------------------------------------------------
  */
 ```
-
-## 言語別関数
-### PHP
-
-### JavaScript
