@@ -30,6 +30,15 @@ URLの最後に`?d=`の引数をつけてサイズを指定することで、画
            https://rabify.example.com/img/hero.jpg?d=620 620w" />
 ```
 
+### 画像を切り抜く場合
+URLの最後に`?d=`の引数に、縦幅をつけることで画像を切り抜くことができます。例えば、以下のURLの場合、横幅200pxに縮小後、縦幅100pxに切り取られます。
+
+```HTML
+<img src="https://rabify.example.com/img/hero.jpg?d=200x100" />
+```
+
+なお、切り抜きは、中央を起点にして切り抜かれます。
+
 ## WordPress
 WordPressは、Themeの`functions.php`によって`<img src>`タグの上書きを行うことができます。以下のソースコードを`functions.php`の最後の行にコピペください。
 
