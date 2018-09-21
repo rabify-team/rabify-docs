@@ -15,7 +15,7 @@
 ```
 
 ### 画像を縮小する場合
-URLの最後に`?d=`の引数をつけてサイズを指定することで、画像を縮小することができます。例えば、以下のURLの場合、横幅200pxに縮小されます。
+URLの最後に`?d=`の引数をつけてサイズを指定することで、画像を縮小することができます。例えば、以下のURLの場合、横幅200pxに縮小されます。 __なお、beta版では50pxの倍数のみをサポートしています。ご注意ください。__
 
 ```HTML
 <img src="https://rabify.example.com/img/hero.jpg?d=200" />
@@ -26,8 +26,8 @@ URLの最後に`?d=`の引数をつけてサイズを指定することで、画
 
 ```HTML
 <img src="https://rabify.example.com/img/hero.jpg"
-  srcset="https://rabify.example.com/img/hero.jpg?d=320 320w
-           https://rabify.example.com/img/hero.jpg?d=620 620w" />
+  srcset="https://rabify.example.com/img/hero.jpg?d=300 300w
+           https://rabify.example.com/img/hero.jpg?d=600 600w" />
 ```
 
 ### 画像を切り抜く場合
@@ -60,8 +60,9 @@ WordPressは、Themeの`functions.php`によって`<img src>`タグの上書き�
 define('CDN_URL','https://rabify.example.com');
 define('CDN_SIZE', [100, 200, 300, 400]);
 define('SRC_SIZE', 'sizes="(max-width: 767px) 89vw, (max-width: 1000px) 54vw, (max-width: 1071px) 543px, 580px"');
+define('REPLACE_METHOD', ['get_the_excerpt', 'the_excerpt', 'the_content']);
 
-function rabify_cdn_replace_filter( $the_content ) {
+function rabify_cdn_filter( $the_content ) {
 	$preg_site_url = preg_replace('/(https?):\/\//', '$1:\/\/', site_url());
 	$preg_site_url = preg_replace('/\./', '\.', $preg_site_url);
 	$pattern = "/${preg_site_url}(.*?[\.jpe?g|\.png|\.bmp])/i";
@@ -70,37 +71,56 @@ function rabify_cdn_replace_filter( $the_content ) {
   return $replace_content;
 }
 
-function rabify_cdn_add_srcset( $the_content )
+function rabify_cdn_srcset( $the_content, $sizes = [] )
 {
 	$preg_cdn_url = preg_replace('/(https?):\/\//', '$1:\/\/', CDN_URL);
 	$preg_cdn_url = preg_replace('/\./', '\.', $preg_cdn_url);
-	$pattern = "/(<img.*?src=)[\'|\"](${preg_cdn_url}.*?[\.jpe?g|\.png|\.bmp])[\'|\"]((?!.*srcset).*>)/i";
+	$pattern = "/(<img.*?src=)[\'|\"](${preg_cdn_url}.*?[\.jpe?g|\.png|\.bmp])[.?|\?](v\=\w+|.?).*?(d\=\w+|.?)[\'|\"]((?!.*srcset).*>)/i";
 
 	$srcset = "srcset=\"";
-	foreach(CDN_SIZE as $size) {
-		$srcset .= "$2?d=${size} ${size}w,";
+
+	if(count($sizes) === 0) {
+	  $sizes = CDN_SIZE;
+  }
+
+	foreach($sizes as $size) {
+		$srcset .= "$2?$3&d=${size} ${size}w, ";
   }
   $srcset = rtrim($srcset, ',') . "\" " . SRC_SIZE;
 
-	$replace_content = preg_replace($pattern, "$1\"$2\" ${srcset} $3", $the_content);
+	$replace_content = preg_replace($pattern, "$1\"$2?$3&$4\" ${srcset} $5", $the_content);
 	return $replace_content;
 }
 
-function rabify_cdn ( $text ) {
-  $text = rabify_cdn_replace_filter( $text );
-  return rabify_cdn_add_srcset( $text );
+function rabify_cdn ( $text, $sizes = [] ) {
+  $text = rabify_cdn_filter( $text );
+  return rabify_cdn_srcset( $text, $sizes );
 }
 
 // サイトアドレス（URL）内にある画像URLを、rabify CDNの差し替えます
-add_filter( 'the_content', 'rabify_cdn_replace_filter', 1 );
+add_filter( 'the_content', 'rabify_cdn_filter', 1 );
 
 // srcsetの設定されていないimgタグにすべてsrcsetを追加します
-add_filter( 'the_content', 'rabify_cdn_add_srcset', 2 );
+add_filter( 'the_content', 'rabify_cdn_srcset', 2 );
 
-// WordPressデフォルトのsrcsetを有効化する場合、コメントアウトしてください。
+// デフォルトのsrcsetを有効化する場合、コメントアウトしてください。
+// WordPressのメディアで設定された画像サイズにしたがって、srcsetが設定されます。
 add_filter( 'wp_calculate_image_srcset_meta', '__return_null' );
-
-/**
- * ----------------------------------------------------------------------
- */
 ```
+
+初期設定では、`the_content()` で表示するコンテンツの画像がすべてrabify CDNに置き換わります。
+`header.php`や`footer.php`などのテンプレートに挿入した画像を置き換える時は、
+
+```php
+$dir = get_template_directory();
+rabify_cdn("<img src=${dir}/example.jpg">")
+```
+
+のようにお使いください。また、画像にsrcsetの個別サイズを設定したい場合は、第二引数をつかって
+
+```php
+$dir = get_template_directory();
+rabify_cdn("<img src=${dir}/example.jpg">", [100,200,300,400])
+```
+
+のように連想配列でご指定ください。
