@@ -113,14 +113,14 @@ add_filter( 'wp_calculate_image_srcset_meta', '__return_null' );
 
 ```php
 $dir = get_template_directory();
-rabify_cdn("<img src=${dir}/example.jpg">")
+echo rabify_cdn("<img src=${dir}/example.jpg">");
 ```
 
 のようにお使いください。また、画像にsrcsetの個別サイズを設定したい場合は、第二引数をつかって
 
 ```php
 $dir = get_template_directory();
-rabify_cdn("<img src=${dir}/example.jpg">", [100,200,300,400])
+echo rabify_cdn("<img src=${dir}/example.jpg">", [100,200,300,400]);
 ```
 
 のように連想配列でご指定ください。
