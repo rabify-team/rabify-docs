@@ -41,12 +41,16 @@ URLの最後に`?d=`の引数に、縦幅をつけることで画像を切り抜
 
 ## WordPress
 ### Plugin利用
-- __WordPressプラグイン公式サイトへの登録作業は申請作業中です__
 - [View Rawをクリックしてプラグインをzipでダウンロード](https://github.com/rabify/cdn/blob/master/sample/wordpress/rabify_cdn.zip)
+
+ダウンロード後、WordPressの「プラグイン => 新規追加 => プラグインのアップロード」から、ダウンロードしたzipファイルをアップロードください。
+![rabify CDN Plugin画面](../images/add_plugin.png)
+
+その後、Plugin「rabify CDN」を有効ください。
+Pluginを有効にすると、`設定`=>`メディア`の下部に以下のような画面がでますので、こちらをご設定ください。
 
 ![rabify CDN Plugin画面](../images/plugin.png)
 
-Pluginを有効にすると、`設定`=>`メディア`の下部に以下のような画面がでますので、こちらをご設定ください。
 
 | 設定項目 | 説明 |
 |---|---|
@@ -54,6 +58,8 @@ Pluginを有効にすると、`設定`=>`メディア`の下部に以下のよ�
 | rabify CDN URL | 弊社からお送りしたURLを入力します |
 | 画像サイズ | 画像サイズのパターンをカンマ区切りで入力します。imgのsrcset属性に反映されます。 |
 | img sizes | `img`の`sizes`属性に反映されます。`the_content`は記事本文、`the_expert`は要約記事、`custom-header`はヘッダー画像、`post_thumbnail_html`はサムネイル画像のimgタグに反映されます。なお、画像に`width`と`height`が設定されていない場合はsizesは反映されません。 |
+| gifファイル | gifファイルにrabify CDNを適用させるかを設定します。gifアニメーションには対応しておりませんので、サイト内でgifアニメーションをご利用の場合はチェックボックスを外してください |
+| bmpファイル | 縮小後6MBを超えるファイルは利用できません。非圧縮のbmpはファイル容量が多くなることが多いのでご注意ください。 |
 | 強制適用 | rabify CDNをすべてのページに適用します。`ob_start` を利用しているので、他のプラグインと競合する可能性があります。適用後は必ずページをご確認ください。 |
 
 
