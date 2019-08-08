@@ -6,4 +6,5 @@
   * [動作確認済みサーバ](docs/rabify_cdn/server.md)
   * [お申込み方法](docs/rabify_cdn/application.md)
   * [設定方法](docs/rabify_cdn/setting.md)
+  * [キャッシュの削除](docs/rabify_cdn/invalidation.md)
 * [利用規約](docs/term.md)
